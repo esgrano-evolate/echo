@@ -1,0 +1,27 @@
+# Buildspec to pull the latest version of the Docker image from docker hub and deploy it to the ECS cluster
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - pip --disable-pip-version-check install -q flake8
+  pre_build:
+    commands:
+      - echo Linting Python...
+      - flake8 --ignore=W605,E501 service/echo.py
+  build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - ecr get-login-password --region $(REGION) | \
+		      docker login --username AWS --password-stdin $(ACCOUNT_ID).dkr.ecr.$(REGION).amazonaws.com
+      - echo Running docker build...
+      - export REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE
+      - docker build -t $REPOSITORY_URI:$IMAGE_TAG
+  post-build:
+    commands:
+      - echo Pushing the Docker image to ECR...
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+artifacts:
+  - taskdef.json
+  - appspec.yml
