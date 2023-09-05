@@ -9,7 +9,7 @@ phases:
   pre_build:
     commands:
       - echo Linting Python...
-      - flake8 --ignore=W605,E501 service/echo.py
+      - flake8 --ignore=W605,E501 echo.py
   build:
     commands:
       - echo Logging in to Amazon ECR...
