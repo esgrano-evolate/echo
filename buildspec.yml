@@ -18,7 +18,7 @@ phases:
       - echo Running docker build...
       - export REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE
       - docker build -t $REPOSITORY_URI:$IMAGE_TAG
-  post-build:
+  post_build:
     commands:
       - echo Pushing the Docker image to ECR...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
