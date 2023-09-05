@@ -14,8 +14,7 @@
         }
     ],
     "requiresCompatibilities": [
-        "FARGATE",
-        "FARGATE_SPOT"
+        "FARGATE"
     ],
     "networkMode": "awsvpc",
     "cpu": "256",
