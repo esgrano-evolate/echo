@@ -1,8 +1,9 @@
 {
+    "executionRoleArn": "arn:aws:iam::{{ AWS_ACCOUNT_ID }}:role/echo-task-execution-role",
     "containerDefinitions": [
         {
             "name": "echo",
-            "image": "<IMAGE1_NAME>",
+            "image": "{{ IMAGE_NAME }}",
             "essential": true,
             "portMappings": [
                 {
