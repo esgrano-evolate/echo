@@ -26,6 +26,7 @@ phases:
       - printf '{"ImageURI":"%s"}' ${REPOSITORY_URI}:${IMAGE_TAG}  > imageDetail.json
       - sed -i 's/{{ AWS_ACCOUNT_ID }}/${AWS_ACCOUNT_ID}/g' taskdef.json
       - sed -i 's/{{ IMAGE_NAME }}/${REPOSITORY_URI}:${IMAGE_TAG}/g' taskdef.json
+      - cat taskdef.json
 artifacts:
   files:
     - imageDetail.json
