@@ -7,8 +7,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 80
 
-COPY echo.py .
+COPY hello.py .
 
 ENTRYPOINT [ "python" ]
 
-CMD ["echo.py"]
+CMD ["hello.py"]

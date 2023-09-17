@@ -5,6 +5,6 @@ Resources:
       Properties:
         TaskDefinition: "<TASK_DEFINITION>"
         LoadBalancerInfo:
-          ContainerName: "echo"
+          ContainerName: "hello"
           ContainerPort: 80
         PlatformVersion: "LATEST"

@@ -1,5 +1,10 @@
 # Buildspec to pull the latest version of the Docker image from docker hub and deploy it to the ECS cluster
 version: 0.2
+
+env:
+  variables:
+    APPLICATION: "hello"
+    IMAGE_TAG: "latest"
 phases:
   install:
     runtime-versions:
@@ -17,8 +22,10 @@ phases:
   build:
     commands:
       - echo Running docker build...
-      - export REPOSITORY_URI=${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_REGION.amazonaws.com/${IMAGE_REPO_NAME}
+      - export REPOSITORY_URI=${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_REGION.amazonaws.com/${APPLICATION}
       - docker build -t ${REPOSITORY_URI}:${IMAGE_TAG} .
+      - echo Create ECR Repository
+      - aws ecr create-repository --repository-name ${APPLICATION} || true
   post_build:
     commands:
       - echo Pushing the Docker image to ECR...
