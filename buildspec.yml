@@ -16,7 +16,7 @@ phases:
   pre_build:
     commands:
       - echo Linting Python...
-      - flake8 --ignore=W605,E501 echo.py
+      - flake8 --ignore=W605,E501 hello.py
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
   build:
@@ -24,8 +24,6 @@ phases:
       - echo Running docker build...
       - export REPOSITORY_URI=${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_REGION.amazonaws.com/${APPLICATION}
       - docker build -t ${REPOSITORY_URI}:${IMAGE_TAG} .
-      - echo Create ECR Repository
-      - aws ecr create-repository --repository-name ${APPLICATION} || true
   post_build:
     commands:
       - echo Pushing the Docker image to ECR...
