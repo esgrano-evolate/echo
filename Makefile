@@ -29,18 +29,18 @@ lint: $(FLAKE8)
 	$(call blue, " Linting lambda...")
 	@$(FLAKE8) --ignore=W605,E501 hello.py
 
-## build: Build the docker image in service
-build: lint
+## docker.build: Build the docker image in service
+docker.build: lint
 	$(call blue,"# Running docker build...")
 	@docker build -t $(DOCKER_IMAGE) .
 
-## login.ecr: Login to ECR
-login.ecr:
+## docker.login: Login to ECR
+docker.login:
 	$(AWS) ecr get-login-password --region $(REGION) | \
 		docker login --username AWS --password-stdin $(ACCOUNT_ID).dkr.ecr.$(REGION).amazonaws.com
 
-## push: Push an image to ECR
-push:
+## docker.push: Push an image to ECR
+docker.push:
 	$(DOCKER) push $(DOCKER_IMAGE)
 
 ## create-repo: Create the ECR repository
